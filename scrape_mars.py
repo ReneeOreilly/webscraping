@@ -5,18 +5,18 @@ from splinter import Browser
 from splinter.exceptions import ElementDoesNotExist
 
 def scrape():
-
+    Marsdict = {}
     url = "https://mars.nasa.gov/news"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     
-    Marstitle = soup.title.text.strip()
-    Marstitle
+    Marsdict['Marstitle'] = soup.title.text.strip()
+    
+  
+    Marsdict['MarsP'] = soup.p.text.strip()
+   
 
-    MarsP = soup.p.text.strip()
-    MarsP
-
-    executable_path = {'executable_path': "/Users/Renee/Downloads/chromedriver_win32/chromedriver.exe"}
+    executable_path = {'executable_path': 'chromedriver.exe'}
     browser = Browser('chrome', **executable_path, headless=False)
 
     url = "http://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
@@ -24,9 +24,9 @@ def scrape():
 
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
-    
+  
     browser.click_link_by_partial_text('FULL IMAGE')
-    
+ 
     browser.click_link_by_partial_text('more info')
     
     html = browser.html
@@ -34,9 +34,8 @@ def scrape():
     images = soup.findAll(attrs ={"main_image"})
     for image in images:
         url_image = image.attrs['src']
-        featured_image = ['https://www.jpl.nasa.gov/' + url_image]     
+        Marsdict['featured_image'] = ['https://www.jpl.nasa.gov/' + url_image]     
         
-    featured_image
 
     url = "https://twitter.com/marswxreport?lang=en"
     browser.visit(url)
@@ -45,9 +44,8 @@ def scrape():
 
     results = soup.find_all('li', class_='js-stream-item stream-item stream-item ')
     for result in results:
-        mars_weather = result.find('p', class_='TweetTextSize TweetTextSize--normal js-tweet-text tweet-text').text
+        Marsdict['mars_weather'] = result.find('p', class_='TweetTextSize TweetTextSize--normal js-tweet-text tweet-text').text
 
-    mars_weather
 
     url = "https://space-facts.com/mars/"
     browser.visit(url)
@@ -65,8 +63,7 @@ def scrape():
 
     df.head()
 
-    html_table = df.to_html()
-    html_table
+    Marsdict['html_table'] = df.to_html()
 
     url = "https://astrogeology.usgs.gov/search/results/results?q=hemisphere+enhanced&k1=target&v1=Mars"
     browser.visit(url)
@@ -87,5 +84,6 @@ def scrape():
         hemisphere_list.append(dict1)
         browser.back()
 
-    hemisphere_list
+    Marsdict['hemisphere_list'] = hemisphere_list
 
+    return Marsdict

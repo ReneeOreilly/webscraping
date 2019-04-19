@@ -34,13 +34,20 @@
             <p class="col-md-6"> {{ Marsdict['html_table'] | safe}}  </p>
             </div>
             <div class="row">
-              <img src= {{ Marsdict['hemisphere_list'][0] }}/>
-              <img src= {{ Marsdict['hemisphere_list'][1] }}/>
-              </div>
-            <div class="row">
-               <img src= {{ Marsdict['hemisphere_list'][2] }}/>
-               <img src= {{ Marsdict['hemisphere_list'][3] }}/>
-            </div>
+               <p >{{ Marsdict['hemisphere_list'][0]['title'] }}</p>
+               <img class="col-md-6" src = {{ Marsdict['hemisphere_list'][0]['image_url'] }} />
+          
+              <p >{{ Marsdict['hemisphere_list'][1]['title'] }}</p>
+              <img class="col-md-6" src = {{ Marsdict['hemisphere_list'][1]['image_url'] }} />
+
+           </div>
+           <div class="row">
+            <p >{{ Marsdict['hemisphere_list'][2]['title'] }}</p>
+            <img class="col-md-6" src = {{ Marsdict['hemisphere_list'][2]['image_url'] }} />
+      
+          <p >{{ Marsdict['hemisphere_list'][3]['title'] }}</p>
+          <img class="col-md-6" src = {{ Marsdict['hemisphere_list'][3]['image_url'] }} />
+       </div>
   </div>
 </body>
 
